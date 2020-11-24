@@ -19,6 +19,8 @@ const Player = ({ currentSong, isPlaying, setIsPlaying }) => {
     });
     //*----------------------------
 
+    //?-----------FUNCTIONS---------
+
     const playSongHandler = () => {
         //se isPlaying e' true metto in pausa senno metto in play
         isPlaying ? audioRef.current.pause() : audioRef.current.play();
@@ -27,6 +29,7 @@ const Player = ({ currentSong, isPlaying, setIsPlaying }) => {
     };
 
     const handleTimeUpdate = (e) => {
+        //!questa funzione scatta su <audio onTimeUpdate...> cioe' ogni volta che cambia
         // console.log(e.target.currentTime);
         // console.log(e.target.duration);
         const { currentTime, duration } = e.target;
@@ -42,11 +45,14 @@ const Player = ({ currentSong, isPlaying, setIsPlaying }) => {
     };
 
     const handleDrag = (e) => {
+        //!questa funzione scatta all' onChange
         // console.log(e.target.value);
         // console.log(audioRef);
-        audioRef.current.currentTime = e.target.value; //?sposto il tempo della canzone nel punto in cui sto draggando il pallino, senno la canzone rimarrebbe al tempo che sta scorrendo
-        setSongInfo({ ...songInfo, currentTime: e.target.value });
+        const currentPoint = e.target.value;
+        audioRef.current.currentTime = currentPoint; //?sposto il tempo della canzone nel punto in cui sto draggando il pallino, senno la canzone rimarrebbe al tempo che sta scorrendo
+        setSongInfo({ ...songInfo, currentTime: currentPoint });
     };
+    //?----------------------------
 
     return (
         <div className="player">
@@ -81,7 +87,7 @@ const Player = ({ currentSong, isPlaying, setIsPlaying }) => {
             </div>
             <audio
                 onTimeUpdate={handleTimeUpdate}
-                onLoadedMetadata={handleTimeUpdate} //mi serve per caricare subito la duration senza aspettare il click sul bottone play
+                onLoadedMetadata={handleTimeUpdate} //!mi serve per caricare subito la duration senza aspettare il click sul bottone play
                 ref={audioRef}
                 src={currentSong.audio}
             />

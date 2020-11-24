@@ -6,6 +6,7 @@
 
     img {
         width: 30%;
+        border-radius: 10px;
     }
 
     &:hover {
@@ -18,8 +19,11 @@
 
     h3 {
         font-size: 1rem;
+        text-decoration: underline;
+        font-style: italic;
     }
     h4 {
         font-size: 0.7rem;
+        font-style: italic;
     }
 }

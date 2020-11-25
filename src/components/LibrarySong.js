@@ -1,9 +1,19 @@
 import React from "react";
 
-function LibrarySong({ song, songs, setCurrentSong }) {
+function LibrarySong({ song, songs, setCurrentSong, audioRef, isPlaying }) {
     function songSelect() {
         console.log("single song --->", song);
         setCurrentSong(song);
+        //!controllo che la canzone sia in play
+        if (isPlaying) {
+            //* devo anche controllare che la canzone sia stata caricata
+            const playPromise = audioRef.current.play();
+            if (playPromise !== undefined) {
+                playPromise.then((audio) => {
+                    audioRef.current.play();
+                });
+            }
+        }
     }
 
     return (

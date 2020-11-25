@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faPlay,
@@ -7,33 +7,26 @@ import {
     faAngleRight,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Player = ({ currentSong, isPlaying, setIsPlaying }) => {
-    //!----------- REF ------------
-    const audioRef = useRef(null);
-    //!----------------------------
-
+const Player = ({
+    currentSong,
+    isPlaying,
+    setIsPlaying,
+    audioRef,
+    handleTimeUpdate,
+    songInfo,
+    setSongInfo,
+}) => {
     //*-----------STATE------------
-    const [songInfo, setSongInfo] = useState({
-        currentTime: 0,
-        duration: 0,
-    });
+
     //*----------------------------
 
-    //?-----------FUNCTIONS---------
+    //?----------FUNCTIONS---------
 
     const playSongHandler = () => {
         //se isPlaying e' true metto in pausa senno metto in play
         isPlaying ? audioRef.current.pause() : audioRef.current.play();
         //ricorda di cambiare lo stato di isPlaying
         setIsPlaying(!isPlaying);
-    };
-
-    const handleTimeUpdate = (e) => {
-        //!questa funzione scatta su <audio onTimeUpdate...> cioe' ogni volta che cambia
-        // console.log(e.target.currentTime);
-        // console.log(e.target.duration);
-        const { currentTime, duration } = e.target;
-        setSongInfo({ ...songInfo, currentTime, duration });
     };
 
     const getTimeInMinutes = (timeInSeconds) => {
@@ -52,6 +45,7 @@ const Player = ({ currentSong, isPlaying, setIsPlaying }) => {
         audioRef.current.currentTime = currentPoint; //?sposto il tempo della canzone nel punto in cui sto draggando il pallino, senno la canzone rimarrebbe al tempo che sta scorrendo
         setSongInfo({ ...songInfo, currentTime: currentPoint });
     };
+
     //?----------------------------
 
     return (
@@ -85,12 +79,6 @@ const Player = ({ currentSong, isPlaying, setIsPlaying }) => {
                     icon={faAngleRight}
                 />
             </div>
-            <audio
-                onTimeUpdate={handleTimeUpdate}
-                onLoadedMetadata={handleTimeUpdate} //!mi serve per caricare subito la duration senza aspettare il click sul bottone play
-                ref={audioRef}
-                src={currentSong.audio}
-            />
         </div>
     );
 };

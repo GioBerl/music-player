@@ -16,10 +16,6 @@ const Player = ({
     songInfo,
     setSongInfo,
 }) => {
-    //*-----------STATE------------
-
-    //*----------------------------
-
     //?----------FUNCTIONS---------
 
     const playSongHandler = () => {

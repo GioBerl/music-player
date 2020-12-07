@@ -1,4 +1,5 @@
 import React from "react";
+import { playAudio } from "../utils";
 
 function LibrarySong({
     song,
@@ -10,7 +11,6 @@ function LibrarySong({
     id,
 }) {
     function songSelect() {
-        // console.log("single song --->", song);
         //!change active state
         const newSongs = songs.map((song) => {
             return song.id === id
@@ -20,17 +20,8 @@ function LibrarySong({
         setSongs(newSongs);
 
         setCurrentSong(song);
-        //!controllo che la canzone sia in play
-        if (isPlaying) {
-            //* devo anche controllare che la canzone sia stata caricata
-            //? Il metodo HTMLMediaElement play () tenta di avviare la riproduzione del media. Restituisce una promessa che viene risolta quando la riproduzione è stata avviata con successo. Il mancato avvio della riproduzione per qualsiasi motivo, ad esempio problemi di autorizzazione, comporta il rifiuto della promessa.
-            const playPromise = audioRef.current.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    audioRef.current.play();
-                });
-            }
-        }
+
+        playAudio(isPlaying, audioRef);
     }
 
     return (

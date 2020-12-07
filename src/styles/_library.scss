@@ -7,8 +7,18 @@
     background-color: white;
     box-shadow: 2px 2px 50px rgb(204, 204, 204);
     overflow: auto;
+    //la nascondo
+    transform: translateX(-100%);
+    transition: all 0.5s ease;
+    opacity: 0;
 
     h2 {
         padding: 2rem;
     }
+}
+
+.active-library {
+    transform: translateX(0%);
+    transition: all 0.5s ease;
+    opacity: 1;
 }
